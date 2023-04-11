@@ -5,20 +5,17 @@
   <meta charset="UTF-8" />
   <title>YouTube Clip Share</title>
 
-  <style>
-    input {
-      display: block;
-      width: 480px;
-    }
-  </style>
+  <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
 </head>
 
 <body>
   <h1>YouTube Clip Share</h1>
-  <input type="text" id="start" placeholder="start" onkeyup="updateResult()">
-  <input type="text" id="end" placeholder="end" onkeyup="updateResult()">
+  <p>Right click a YouTube video, then click "Copy video URL at current time." Paste that in here for the start and end times to get a sharable link.</p>
+  <input type="text" id="start" placeholder="Start" onkeyup="updateResult()">
+  <input type="text" id="end" placeholder="End" onkeyup="updateResult()">
   <input type="text" id="result" disabled>
-  <button id="copy" onclick="copyResult()">Copy</button>
+  <button id="copy" onclick="copyResult()">Copy to Share</button>
+  <p class="notice" style="display: none;">Copied!</p>
 
   <script>
     // Create sharable URL
@@ -45,6 +42,7 @@
       } catch (err) {
         console.error('Failed to copy: ', err);
       }
+      document.querySelector('.notice').style.display = 'block';
     };
   </script>
 </body>
