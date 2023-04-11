@@ -4,14 +4,49 @@
 <head>
   <meta charset="UTF-8" />
   <title>YouTube Clip Share</title>
+
+  <style>
+    input {
+      display: block;
+      width: 480px;
+    }
+  </style>
 </head>
 
 <body>
   <h1>YouTube Clip Share</h1>
-  <form>
-    <input type="text" name="start" id="start" placeholder="start">
-    <input type="text" name="end" id="end" placeholder="end">
-  </form>
+  <input type="text" id="start" placeholder="start" onkeyup="updateResult()">
+  <input type="text" id="end" placeholder="end" onkeyup="updateResult()">
+  <input type="text" id="result" disabled>
+  <button id="copy" onclick="copyResult()">Copy</button>
+
+  <script>
+    // Create sharable URL
+    function updateResult() {
+      let start = document.getElementById('start').value;
+      let end = document.getElementById('end').value;
+
+      if (!start || !end)
+        return;
+
+      let video = start.match(/youtu.be\/(.*)\?/)[1];
+      let startTime = start.split('=')[1];
+      let endTime = end.split('=')[1];
+      let result = document.getElementById('result');
+
+      result.value = 'https://www.youtube.com/embed/' + video + '?start=' + startTime + '&end=' + endTime;
+    }
+
+    // Copy to clipboard for sharing
+    const copyResult = async () => {
+      let result = document.getElementById('result');
+      try {
+        await navigator.clipboard.writeText(result.value);
+      } catch (err) {
+        console.error('Failed to copy: ', err);
+      }
+    };
+  </script>
 </body>
 
 </html>
